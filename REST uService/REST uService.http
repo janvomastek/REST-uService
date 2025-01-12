@@ -1,6 +1,81 @@
 @REST_uService_HostAddress = http://localhost:5261
 
-GET {{REST_uService_HostAddress}}/weatherforecast/
-Accept: application/json
+# Create an order
+POST {{REST_uService_HostAddress}}/api/orders
+Content-Type: application/json
+
+{
+  "customerName": "Jan Uzivatel",
+  "items": [
+    {
+      "productName": "iPhone 16 Pro max",
+      "quantity": 1,
+      "pricePerUnit": 35000
+    },
+{
+      "productName": "Nabijecka",
+      "quantity": 2,
+      "pricePerUnit": 250
+    }
+  ]
+}
+
+###
+
+# Get all orders
+GET {{REST_uService_HostAddress}}/api/orders
+
+###
+
+# Process payment for an order
+POST {{REST_uService_HostAddress}}/api/orders/1/payment
+Content-Type: application/json
+
+false
+
+###
+
+# Get an order by ID (direct call, hidden in Swagger)
+GET {{REST_uService_HostAddress}}/api/orders
+
+###
+
+# Create an order
+POST {{REST_uService_HostAddress}}/api/orders
+Content-Type: application/json
+
+{
+  "customerName": "Tomas Uzivatel",
+  "items": [
+    {
+      "productName": "iPhone 15",
+      "quantity": 1,
+      "pricePerUnit": 15000
+    },
+{
+      "productName": "Sluchatka",
+      "quantity": 5,
+      "pricePerUnit": 900
+    }
+  ]
+}
+
+###
+
+# Get all orders
+GET {{REST_uService_HostAddress}}/api/orders
+
+###
+
+# Process payment for an order
+POST {{REST_uService_HostAddress}}/api/orders/2/payment
+Content-Type: application/json
+
+true
+
+###
+
+# Get all orders
+GET {{REST_uService_HostAddress}}/api/orders
 
 ###
