@@ -21,6 +21,23 @@ namespace REST_uService.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateOrder([FromBody] Models.Order order)
         {
+            if (order.Items == null || order.Items.Count == 0)
+                return BadRequest("Order must have at least one item.");
+            if (order.CustomerName == null)
+                return BadRequest("Order must have a customer name.");
+            if (order.Status != Models.OrderStatus.New)
+                return BadRequest("Order status must be New.");
+
+            foreach (var item in order.Items)
+            {
+                if (item.Quantity <= 0)
+                    return BadRequest("Item quantity must be greater than zero.");
+                if (item.PricePerUnit < 0)
+                    return BadRequest("Item price must be greater or equal to zero.");
+                if (item.ProductName == null)
+                    return BadRequest("Item must have a product name.");
+            }
+
             _context.Orders.Add(order);
             await _context.SaveChangesAsync();
             return CreatedAtAction(nameof(GetOrderById), new { id = order.Id }, order);
